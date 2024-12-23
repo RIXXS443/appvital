@@ -18,8 +18,34 @@ h1 {
     color: #333;
 }
 
-form, ul {
-    margin-top: 20px;
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
 
 ul {
@@ -29,9 +55,10 @@ ul {
 
 li {
     margin: 10px 0;
-    padding: 10px;
+    padding: 15px;
     background: #e9ecef;
     border-radius: 5px;
+    line-height: 1.6;
 }
 
 .link {
