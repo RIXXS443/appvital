@@ -124,7 +124,7 @@ async function validateClientNumber() {
 
         if (existingClient) {
             validationMessage.style.color = 'red';
-            validationMessage.textContent = `El número de cliente ${clientNumber} ya está registrado por: ${existingClient.Nombre} ${existingClient.Apellido} del Municipio ${muni.MUNICIPIOS}`;
+            validationMessage.textContent = `El número de cliente ${clientNumber} ya está registrado por: ${existingClient.Nombre} ${existingClient.Apellido} del Municipio ${existingClient.MUNICIPIOS}`;
             submitButton.disabled = true;
         } else {
             validationMessage.style.color = 'green';
