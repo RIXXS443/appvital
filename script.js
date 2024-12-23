@@ -96,3 +96,73 @@ document.addEventListener('DOMContentLoaded', () => {
         municipalitySelect.appendChild(option);
     });
 });
+
+// Validar el número de cliente
+async function validateClientNumber() {
+    const clientNumber = document.getElementById('clientNumber').value;
+
+    if (!clientNumber) {
+        validationMessage.style.color = 'red';
+        validationMessage.textContent = 'Por favor, ingresa un número de cliente.';
+        submitButton.disabled = true;
+        return;
+    }
+
+    try {
+        const response = await fetch(apiGetUrl);
+        const clients = await response.json();
+
+        const existingClient = clients.find(client => client.Numero_Cliente === clientNumber);
+
+        if (existingClient) {
+            validationMessage.style.color = 'red';
+            validationMessage.textContent = `El número de cliente ${clientNumber} ya está registrado por: ${existingClient.Nombre} ${existingClient.Apellido}`;
+            submitButton.disabled = true;
+        } else {
+            validationMessage.style.color = 'green';
+            validationMessage.textContent = `El número de cliente ${clientNumber} está disponible.`;
+            submitButton.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error al validar el cliente:', error.message);
+        validationMessage.textContent = 'Hubo un error al validar el cliente. Intente nuevamente.';
+        submitButton.disabled = true;
+    }
+}
+
+// Registrar cliente
+clientForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const clientNumber = document.getElementById('clientNumber').value;
+
+    const clientData = {
+        Numero_Cliente: clientNumber,
+        Nombre: document.getElementById('name').value,
+        Apellido: document.getElementById('surname').value,
+        Telefono: document.getElementById('phone').value,
+        Email: document.getElementById('email').value,
+        Municipio: document.getElementById('municipality').value,
+        Direccion: document.getElementById('address').value,
+    };
+
+    try {
+        const response = await fetch(apiCreateUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(clientData),
+        });
+
+        if (response.ok) {
+            alert('Cliente registrado con éxito.');
+            clientForm.reset();
+            validationMessage.textContent = '';
+            submitButton.disabled = true;
+        } else {
+            throw new Error('Error al registrar el cliente.');
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        alert('No se pudo registrar el cliente.');
+    }
+}
