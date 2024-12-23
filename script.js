@@ -85,16 +85,24 @@ const municipalities = [
     { MUNICIPIOS: "Santo Pipó", Departamento: "San Ignacio" },
     { MUNICIPIOS: "Tres Capones", Departamento: "Apóstoles" },
 ];
-
 // Llenar el campo de municipios
 document.addEventListener('DOMContentLoaded', () => {
     const municipalitySelect = document.getElementById('municipality');
+    if (!municipalitySelect) {
+        console.error('No se encontró el select con el ID "municipality".');
+        return;
+    }
+
     municipalities.forEach(muni => {
         const option = document.createElement('option');
         option.value = muni.MUNICIPIOS;
         option.textContent = `${muni.MUNICIPIOS} (${muni.Departamento})`;
         municipalitySelect.appendChild(option);
     });
+
+    // Manejar el evento de entrada en el campo Número de Cliente
+    const clientNumberInput = document.getElementById('clientNumber');
+    clientNumberInput.addEventListener('input', validateClientNumber);
 });
 
 // Validar el número de cliente
@@ -165,4 +173,4 @@ clientForm.addEventListener('submit', async (e) => {
         console.error('Error:', error.message);
         alert('No se pudo registrar el cliente.');
     }
-}
+});
