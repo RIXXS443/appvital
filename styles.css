@@ -14,51 +14,33 @@ body {
     border-radius: 5px;
 }
 
-h1, h2 {
+h1 {
     color: #333;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    margin: 10px 0 5px;
-    font-weight: bold;
-}
-
-input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-#clientList {
+form, ul {
     margin-top: 20px;
 }
 
 ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
 li {
-    padding: 5px;
-    background: #f9f9f9;
-    border-bottom: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+}
+
+.link {
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.link:hover {
+    text-decoration: underline;
 }
