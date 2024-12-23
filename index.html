@@ -10,8 +10,11 @@
     <div class="container">
         <h1>Registro de Clientes</h1>
         <form id="clientForm">
-            <label for="name">Nombre completo:</label>
+            <label for="name">Nombre:</label>
             <input type="text" id="name" required>
+
+            <label for="surname">Apellido:</label>
+            <input type="text" id="surname" required>
 
             <label for="address">Dirección:</label>
             <input type="text" id="address" required>
@@ -19,21 +22,21 @@
             <label for="phone">Teléfono:</label>
             <input type="tel" id="phone" required>
 
-            <label for="email">Correo electrónico:</label>
+            <label for="email">Correo Electrónico:</label>
             <input type="email" id="email" required>
 
             <label for="municipality">Municipio:</label>
             <select id="municipality" required>
                 <option value="">Selecciona un municipio</option>
-                <!-- Opciones se generan dinámicamente desde script.js -->
+                <!-- Opciones generadas dinámicamente -->
             </select>
 
-            <label for="clientNumber">Número de cliente:</label>
+            <label for="clientNumber">Número de Cliente:</label>
             <input type="text" id="clientNumber" readonly>
 
             <button type="submit">Registrar</button>
         </form>
-        <a href="view.html" class="link">Ver clientes registrados</a>
+        <a href="view.html" class="link">Ver Clientes Registrados</a>
     </div>
     <script src="script.js"></script>
 </body>
