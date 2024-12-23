@@ -3,17 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes Registrados</title>
+    <title>Registro de Clientes</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Clientes Registrados</h1>
-        <ul id="clientList">
-            <!-- Lista de clientes generada dinámicamente desde view.js -->
-        </ul>
-        <a href="index.html" class="link">Registrar nuevos clientes</a>
+        <h1>Registro de Clientes</h1>
+        <form id="clientForm">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" required>
+
+            <label for="surname">Apellido:</label>
+            <input type="text" id="surname" required>
+
+            <label for="address">Dirección:</label>
+            <input type="text" id="address" required>
+
+            <label for="phone">Teléfono:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" required>
+
+            <label for="municipality">Municipio:</label>
+            <select id="municipality" required>
+                <option value="">Selecciona un municipio</option>
+                <!-- Opciones generadas dinámicamente -->
+            </select>
+
+            <label for="clientNumber">Número de Cliente:</label>
+            <input type="text" id="clientNumber" readonly>
+
+            <button type="submit">Registrar</button>
+        </form>
+        <a href="view.html" class="link">Ver Clientes Registrados</a>
     </div>
-    <script src="view.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
