@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-    max-width: 600px;
+    max-width: 900px;
     margin: 20px auto;
     padding: 20px;
     background: white;
@@ -19,9 +19,10 @@ body {
 h1 {
     color: #333;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Formulario */
+/* Formulario (para index.html) */
 form {
     display: flex;
     flex-wrap: wrap;
@@ -54,12 +55,64 @@ button:hover {
     background-color: #0056b3;
 }
 
+/* Tabla (para view.html) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead tr {
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Filtro (para buscar en la tabla) */
+#search {
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 /* Links */
 a {
     text-decoration: none;
     color: #007bff;
+    font-weight: bold;
 }
 
 a:hover {
     text-decoration: underline;
+}
+
+/* Respuesta Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
 }
