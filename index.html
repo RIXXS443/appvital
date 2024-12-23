@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Clientes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Registro de Clientes</h1>
+        <form id="clientForm">
+            <label for="name">Nombre completo:</label>
+            <input type="text" id="name" required>
+
+            <label for="address">Dirección:</label>
+            <input type="text" id="address" required>
+
+            <label for="phone">Teléfono:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" required>
+
+            <label for="municipality">Municipio:</label>
+            <select id="municipality" required>
+                <option value="">Selecciona un municipio</option>
+                <!-- Opciones se generan dinámicamente desde script.js -->
+            </select>
+
+            <label for="clientNumber">Número de cliente:</label>
+            <input type="text" id="clientNumber" readonly>
+
+            <button type="submit">Registrar</button>
+        </form>
+        <a href="view.html" class="link">Ver clientes registrados</a>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
