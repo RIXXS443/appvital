@@ -1,5 +1,3 @@
-const apiGetUrl = "https://prod-21.brazilsouth.logic.azure.com/workflows/a1f66a512b30401f837963fb67c270fb/triggers/manual/paths/invoke/obtener_registros?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wv5unUjOMZBO6-uen9yvRsJi-ao7WAkE_pB35q_0D7k";
-
 document.addEventListener('DOMContentLoaded', async () => {
     const clientTableBody = document.querySelector('#clientTable tbody');
 
@@ -18,12 +16,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Iterar sobre los clientes y crear filas en la tabla
             clients.forEach(client => {
                 const row = document.createElement('tr');
+
+                // Asegurar que el número tenga formato internacional
+                const rawPhone = client.Telefono.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                const formattedPhone = `549${rawPhone}`; // Agrega el prefijo para WhatsApp
+
                 row.innerHTML = `
                     <td>${client.Numero_Cliente}</td>
                     <td>${client.Nombre}</td>
                     <td>${client.Apellido}</td>
                     <td>${client.Direccion}</td>
-                    <td>${client.Telefono}</td>
+                    <td><a href="https://wa.me/${formattedPhone}" target="_blank">${formattedPhone}</a></td>
                     <td>${client.Email}</td>
                     <td>${client.Municipio.trim()}</td>
                 `;
