@@ -37,3 +37,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         clientTableBody.innerHTML = '<tr><td colspan="7">Error al cargar los clientes.</td></tr>';
     }
 });
+
+// Función para filtrar la tabla
+function filterTable() {
+    const input = document.getElementById('search');
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById('clientTable');
+    const rows = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < rows.length; i++) { // Empieza en 1 para omitir el encabezado
+        const cells = rows[i].getElementsByTagName('td');
+        let match = false;
+
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j]) {
+                const text = cells[j].textContent || cells[j].innerText;
+                if (text.toLowerCase().includes(filter)) {
+                    match = true;
+                    break;
+                }
+            }
+        }
+
+        rows[i].style.display = match ? '' : 'none'; // Muestra u oculta la fila
+    }
+}
