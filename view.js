@@ -13,19 +13,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                 clientTableBody.innerHTML = '<tr><td colspan="6">No hay clientes registrados en el sistema.</td></tr>';
                 return;
             }
+clients.forEach(client => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${client.Numero_Cliente}</td>
+        <td>${client.Nombre}</td>
+        <td>${client.Apellido}</td>
+        <td>${client.Direccion}</td>
+        <td>${client.Telefono}</td>
+        <td>${client.Municipio.trim()}</td>
+    `;
+    clientTableBody.appendChild(row);
+});
 
-            clients.forEach(client => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${client.Numero_Cliente}</td>
-                    <td>${client.Nombre}</td>
-                    <td>${client.Apellido}</td>
-                    <td>${client.Direccion}</td>
-                    <td>${client.Telefono}</td>
-                    <td>${client.Municipio.trim()}</td>
-                `;
-                clientTableBody.appendChild(row);
-            });
         } else {
             throw new Error('Error al obtener la lista de clientes.');
         }
