@@ -34,3 +34,32 @@ clients.forEach(client => {
         clientTableBody.innerHTML = '<tr><td colspan="6">Error al cargar los clientes.</td></tr>';
     }
 });
+
+
+function filterTable() {
+    const searchInput = document.getElementById('search').value.toLowerCase();
+    const tableBody = document.querySelector('#clientTable tbody');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    for (let row of rows) {
+        let text = '';
+        const cells = row.getElementsByTagName('td');
+        
+        // Omitir si es una fila de error o mensaje de "no hay clientes"
+        if (cells.length <= 1) {
+            continue;
+        }
+
+        // Concatenar todo el contenido de las celdas
+        for (let cell of cells) {
+            text += cell.textContent.toLowerCase() + ' ';
+        }
+
+        // Mostrar/ocultar fila según el texto de búsqueda
+        if (text.includes(searchInput)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    }
+}
