@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clientes Registrados</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Clientes Registrados</h1>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Clientes Registrados</h1>
         
         <!-- Filtro -->
-        <label for="search">Buscar:</label>
-        <input type="text" id="search" placeholder="Filtrar por cualquier columna..." oninput="filterTable()">
+        <div class="mb-3">
+            <label for="search" class="form-label">Buscar:</label>
+            <input type="text" id="search" class="form-control" placeholder="Filtrar por cualquier columna..." oninput="filterTable()">
+        </div>
 
         <!-- Tabla de Clientes -->
-        <table id="clientTable">
-            <thead>
+        <table id="clientTable" class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th>Número de Cliente</th>
                     <th>Nombre</th>
@@ -31,8 +35,10 @@
             </tbody>
         </table>
 
-        <a href="index.html" class="link">Registrar Nuevos Clientes</a>
+        <a href="index.html" class="btn btn-primary">Registrar Nuevos Clientes</a>
     </div>
     <script src="view.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
