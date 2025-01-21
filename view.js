@@ -10,12 +10,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const clients = await response.json();
 
             if (clients.length === 0) {
-                // Mostrar mensaje si no hay datos
-                clientTableBody.innerHTML = '<tr><td colspan="7">No hay clientes registrados en el sistema.</td></tr>';
+                clientTableBody.innerHTML = '<tr><td colspan="6">No hay clientes registrados en el sistema.</td></tr>';
                 return;
             }
 
-            // Iterar sobre los clientes y crear filas en la tabla
             clients.forEach(client => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -24,7 +22,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td>${client.Apellido}</td>
                     <td>${client.Direccion}</td>
                     <td>${client.Telefono}</td>
-                    <td>${client.Email}</td>
                     <td>${client.Municipio.trim()}</td>
                 `;
                 clientTableBody.appendChild(row);
@@ -34,31 +31,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     } catch (error) {
         console.error('Error:', error.message);
-        clientTableBody.innerHTML = '<tr><td colspan="7">Error al cargar los clientes.</td></tr>';
+        clientTableBody.innerHTML = '<tr><td colspan="6">Error al cargar los clientes.</td></tr>';
     }
 });
-
-// Función para filtrar la tabla
-function filterTable() {
-    const input = document.getElementById('search');
-    const filter = input.value.toLowerCase();
-    const table = document.getElementById('clientTable');
-    const rows = table.getElementsByTagName('tr');
-
-    for (let i = 1; i < rows.length; i++) { // Empieza en 1 para omitir el encabezado
-        const cells = rows[i].getElementsByTagName('td');
-        let match = false;
-
-        for (let j = 0; j < cells.length; j++) {
-            if (cells[j]) {
-                const text = cells[j].textContent || cells[j].innerText;
-                if (text.toLowerCase().includes(filter)) {
-                    match = true;
-                    break;
-                }
-            }
-        }
-
-        rows[i].style.display = match ? '' : 'none'; // Muestra u oculta la fila
-    }
-}
