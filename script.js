@@ -1,4 +1,5 @@
 const apiCreateUrl = "https://prod-02.brazilsouth.logic.azure.com/workflows/e0216dc0080c434f92f90ffda79fd4ff/triggers/manual/paths/invoke/crear_cliente?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lWqG4wSkg3jW3VK7Sl-5oRVdUsijaLZ3BzovP6e86ZA";
+const apiGetUrl = "https://prod-21.brazilsouth.logic.azure.com/workflows/a1f66a512b30401f837963fb67c270fb/triggers/manual/paths/invoke/obtener_registros?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wv5unUjOMZBO6-uen9yvRsJi-ao7WAkE_pB35q_0D7k";
 
 // Array de municipios
 const municipalities = [
@@ -88,7 +89,46 @@ document.addEventListener('DOMContentLoaded', () => {
         option.textContent = `${muni.MUNICIPIOS} (${muni.Departamento})`;
         municipalitySelect.appendChild(option);
     });
+
+    // Validar el número de cliente
+    const clientNumberInput = document.getElementById('clientNumber');
+    clientNumberInput.addEventListener('input', validateClientNumber);
 });
+
+// Validar si el número de cliente ya existe
+async function validateClientNumber() {
+    const clientNumber = document.getElementById('clientNumber').value;
+    const validationMessage = document.getElementById('validationMessage');
+    const submitButton = document.getElementById('submitButton');
+
+    if (!clientNumber) {
+        validationMessage.style.color = 'red';
+        validationMessage.textContent = 'Por favor, ingresa un número de cliente.';
+        submitButton.disabled = true;
+        return;
+    }
+
+    try {
+        const response = await fetch(apiGetUrl);
+        const clients = await response.json();
+
+        const existingClient = clients.find(client => client.Numero_Cliente === clientNumber);
+
+        if (existingClient) {
+            validationMessage.style.color = 'red';
+            validationMessage.textContent = `El número de cliente ${clientNumber} ya está registrado por: ${existingClient.Nombre} ${existingClient.Apellido}`;
+            submitButton.disabled = true;
+        } else {
+            validationMessage.style.color = 'green';
+            validationMessage.textContent = `El número de cliente ${clientNumber} está disponible.`;
+            submitButton.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error al validar el cliente:', error.message);
+        validationMessage.textContent = 'Hubo un error al validar el cliente. Intente nuevamente.';
+        submitButton.disabled = true;
+    }
+}
 
 // Manejar el evento de envío del formulario
 clientForm.addEventListener('submit', async (e) => {
@@ -123,3 +163,4 @@ clientForm.addEventListener('submit', async (e) => {
         alert('No se pudo registrar el cliente.');
     }
 });
+      
