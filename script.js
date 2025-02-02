@@ -1,5 +1,8 @@
 const apiCreateUrl = "https://prod-02.brazilsouth.logic.azure.com/workflows/e0216dc0080c434f92f90ffda79fd4ff/triggers/manual/paths/invoke/crear_cliente?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lWqG4wSkg3jW3VK7Sl-5oRVdUsijaLZ3BzovP6e86ZA";
 const apiGetUrl = "https://prod-21.brazilsouth.logic.azure.com/workflows/a1f66a512b30401f837963fb67c270fb/triggers/manual/paths/invoke/obtener_registros?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wv5unUjOMZBO6-uen9yvRsJi-ao7WAkE_pB35q_0D7k";
+const apiDeleteUrl = "https://prod-16.brazilsouth.logic.azure.com/workflows/afdbdf82d461481c8e6c1381ba764ba3/triggers/manual/paths/invoke/eliminar_cliente?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=jn1ys-p_-efu_bwm0D-AJIBS2gOkiGqKTVWUW45pesQ";
+const apiUpdateUrl = "https://prod-05.brazilsouth.logic.azure.com/workflows/1b22dc96da714da1a10b6ed483c76a90/triggers/manual/paths/invoke/actualizar_cliente?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=dikB4VCLsvBfEUyXgJ7Q1wyF0O1Onpwa9GsJdH8YzdU";
+
 
 // Array de municipios
 const municipalities = [
@@ -79,6 +82,10 @@ const municipalities = [
     { MUNICIPIOS: "Santo Pipó", Departamento: "San Ignacio" },
     { MUNICIPIOS: "Tres Capones", Departamento: "Apóstoles" },
 ];
+
+// Definir variables
+const clientForm = document.getElementById('clientForm');
+const validationMessage = document.getElementById('validationMessage');
 
 // Llenar el campo de municipios
 document.addEventListener('DOMContentLoaded', () => {
@@ -163,4 +170,60 @@ clientForm.addEventListener('submit', async (e) => {
         alert('No se pudo registrar el cliente.');
     }
 });
-      
+
+async function deleteClient(clientNumber) {
+    try {
+        const response = await fetch(apiDeleteUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ Numero_Cliente: clientNumber })
+        });
+        if (response.ok) {
+            alert('Cliente eliminado con éxito.');
+            location.reload();
+        } else {
+            throw new Error('Error al eliminar el cliente.');
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        alert('No se pudo eliminar el cliente.');
+    }
+}
+
+document.getElementById('editClientForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const clientData = {
+        Numero_Cliente: document.getElementById('editClientNumber').value,
+        Nombre: document.getElementById('editName').value,
+        Apellido: document.getElementById('editSurname').value,
+        Direccion: document.getElementById('editAddress').value,
+        Telefono: document.getElementById('editPhone').value,
+        Municipio: document.getElementById('editMunicipality').value,
+    };
+
+    try {
+        const response = await fetch(apiUpdateUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(clientData),
+        });
+
+        if (response.ok) {
+            alert('Cliente actualizado con éxito.');
+
+            // Cerrar el modal
+            const editModal = bootstrap.Modal.getInstance(document.getElementById('editClientModal'));
+            editModal.hide();
+
+            // Recargar la tabla sin refrescar la página
+            await loadClients();
+        } else {
+            throw new Error('Error al actualizar el cliente.');
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        alert('No se pudo actualizar el cliente.');
+    }
+});
+
