@@ -7,22 +7,33 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         const response = await fetch(apiGetUrl);
-
         if (response.ok) {
             const clients = await response.json();
 
             if (clients.length === 0) {
-                clientTableBody.innerHTML = '<tr><td colspan="6">No hay clientes registrados en el sistema.</td></tr>';
+                clientTableBody.innerHTML = '<tr><td colspan="7">No hay clientes registrados en el sistema.</td></tr>';
                 return;
             }
+
             clients.forEach(client => {
+                // Formatear número para WhatsApp (Argentina +54)
+                let formattedPhone = client.Telefono.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                if (!formattedPhone.startsWith("54")) {
+                    formattedPhone = "54" + formattedPhone; // Agrega el prefijo si no lo tiene
+                }
+                const whatsappLink = `https://wa.me/${formattedPhone}`;
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${client.Numero_Cliente}</td>
                     <td>${client.Nombre}</td>
                     <td>${client.Apellido}</td>
                     <td>${client.Direccion}</td>
-                    <td>${client.Telefono}</td>
+                    <td>
+                        <a href="${whatsappLink}" target="_blank" class="btn btn-success btn-sm">
+                            <i class="bi bi-whatsapp"></i> ${client.Telefono}
+                        </a>
+                    </td>
                     <td>${client.Municipio.trim()}</td>
                     <td>
                         <button class="btn btn-danger btn-sm" onclick="deleteClient('${client.Numero_Cliente}')">Eliminar</button>
@@ -36,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     } catch (error) {
         console.error('Error:', error.message);
-        clientTableBody.innerHTML = '<tr><td colspan="6">Error al cargar los clientes.</td></tr>';
+        clientTableBody.innerHTML = '<tr><td colspan="7">Error al cargar los clientes.</td></tr>';
     }
 });
 
@@ -178,13 +189,24 @@ async function loadClients() {
             }
 
             clients.forEach(client => {
+                // Formatear número para WhatsApp (Argentina +54)
+                let formattedPhone = client.Telefono.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                if (!formattedPhone.startsWith("54")) {
+                    formattedPhone = "54" + formattedPhone; // Agrega el prefijo si no lo tiene
+                }
+                const whatsappLink = `https://wa.me/${formattedPhone}`;
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${client.Numero_Cliente}</td>
                     <td>${client.Nombre}</td>
                     <td>${client.Apellido}</td>
                     <td>${client.Direccion}</td>
-                    <td>${client.Telefono}</td>
+                    <td>
+                        <a href="${whatsappLink}" target="_blank" class="btn btn-success btn-sm">
+                            <i class="bi bi-whatsapp"></i> ${client.Telefono}
+                        </a>
+                    </td>
                     <td>${client.Municipio.trim()}</td>
                     <td>
                         <button class="btn btn-danger btn-sm" onclick="deleteClient('${client.Numero_Cliente}')">Eliminar</button>
